@@ -3,16 +3,49 @@ import styled from "styled-components";
 const BoardContainer = styled.div`
     border: 2px solid green;
     padding: 30px;
-    position: absolute;
+    width:70%;
+    margin: -80px auto;
     background-color: white;
-    left:15vw;
-    right: 15vw;
+    
+`
+const BoardTitle = styled.h3`
+    text-align: center;
+    font-family:'Commissioner', sans-serif;
+    font-weight: 700;
+    font-size:1.2rem;
+    letter-spacing: 1;
 `
 
-const Board = () => <BoardContainer>
-Mastercraft Bamboo Monitor Riser A beautiful & handcrafted monitor stand to
-    reduce neck and eye strain. Back this project Bookmark $89,914 of $100,000
-    backed 5,007 total backers 56 days left About this project The Mastercraft
+const BoardText =  styled.div`
+ font-weight: 400;
+ font-size:0.8rem;
+ text-align: center;
+`
+const SecondBoard =  styled(BoardContainer)`
+    border: 2px solid red;
+    margin: 100px auto;
+`
+
+const ThirdBoard = styled(BoardContainer)`
+   border: 2px solid purple;
+   margin: -80px auto;
+`
+const BoardButton = styled.button``
+const Board = () => 
+    <>
+  <BoardContainer>
+      <BoardTitle>Mastercraft Bamboo Monitor Riser</BoardTitle>
+      <BoardText> 
+          A beautiful & handcrafted monitor stand toreduce neck and eye strain.
+    </BoardText>  
+   <BoardButton>Back this project </BoardButton> 
+    <BoardButton>Bookmark </BoardButton>
+    </BoardContainer>
+    <SecondBoard>
+     $89,914 of $100,000
+     backed 5,007 total backers 56 days left
+    </SecondBoard>
+    <ThirdBoard>About this project The Mastercraft
     Bamboo Monitor Riser is a sturdy and stylish platform that elevates your
     screen to a more comfortable viewing height. Placing your monitor at eye
     level has the potential to improve your posture and make you more
@@ -28,14 +61,15 @@ Mastercraft Bamboo Monitor Riser A beautiful & handcrafted monitor stand to
     Special Edition Pledge $200 or more You get two Special Edition Mahogany
     stands, a Backer T-Shirt, and a personal thank you. You’ll be added to our
     Backer member list. Shipping is included. 0 left Out of Stock
-    {/* Selection modal start  */}
-    Back this project Want to support us in bringing Mastercraft Bamboo Monitor
+    </ThirdBoard>
+  
+   { /* Back this project Want to support us in bringing Mastercraft Bamboo Monitor
     Riser out in the world? Pledge with no reward Choose to support us without a
     reward if you simply believe in our project. As a backer, you will be signed
     up to receive product updates via email. Bamboo Stand Pledge $25 or more You
     get an ergonomic stand made of natural bamboo. You've helped us launch our
     promotional campaign, and you’ll be added to a special Backer member list.
-    101 left
-</BoardContainer>
+   101 left */}
 
+</>
 export default Board
