@@ -24,9 +24,9 @@ const Nav = styled.nav`
 const NavItem = styled.div`
 color: #fff;
 font-family:'Commissioner', sans-serif;
-font-weight: 400;
+font-weight: 700;
 font-size: 0.9rem;
-margin-right: 10px;
+margin-right: 20px;
 `;
 
 const Logo = styled.img`

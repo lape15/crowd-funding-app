@@ -1,51 +1,123 @@
 import styled from "styled-components";
+import bookMark from "../assets/icon-bookmark.svg";
 
 const BoardContainer = styled.div`
-    border: 2px solid green;
-    padding: 30px;
-    width:70%;
+    padding: 35px 30px;
+    width:48%;
     margin: -80px auto;
     background-color: white;
-    
+    border:1px solid white;
+    border-radius: 8px;
+    box-shadow: -2px 2px 2px 2px rgba( 215 ,215, 215 , 0.2);
 `
 const BoardTitle = styled.h3`
     text-align: center;
     font-family:'Commissioner', sans-serif;
     font-weight: 700;
     font-size:1.2rem;
-    letter-spacing: 1;
+    letter-spacing: 1.1px;
+    line-height: 2;
 `
 
 const BoardText =  styled.div`
  font-weight: 400;
  font-size:0.8rem;
  text-align: center;
+ color: grey;
+ line-height: 2;
+ margin-top: 10px;
 `
 const SecondBoard =  styled(BoardContainer)`
-    border: 2px solid red;
     margin: 100px auto;
+    display: flex;
+    flex-direction: row;
 `
 
 const ThirdBoard = styled(BoardContainer)`
-   border: 2px solid purple;
    margin: -80px auto;
 `
-const BoardButton = styled.button``
+
+const ButtonContainer = styled.div`
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        margin-top:12px;
+`
+const BoardButton = styled.button`
+    padding:  2px 20px;
+    border: none;
+    background: hsl(176, 50%, 47%);
+    color: white;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 0.8rem;
+`
+const GreyButton = styled(BoardButton)`
+    background : hsl(176, 72%, 28%);
+    color: hsl(0, 0%, 48%);
+    background: #F3F3F3;
+    padding:  0px 20px 0px 0;
+    position: relative;
+`
+const BookMarkImg = styled.img`
+    width: 40px;
+    margin-right: 7px;
+`;
+const BookMark = styled.div`
+    display: inline-block;
+    position: relative;
+    top: -10px;
+`
+const BoardItem = styled.div`
+    flex: 1;
+    border-right: 1px solid hsl(0, 0%, 90%);
+    padding: 20px;
+    &:nth-of-type(3){
+        border-right:none;
+    }
+`
+const BackedAmount =  styled.div`
+    font-family:'Commissioner', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+`;
+const BackedDetails = styled.div`
+    color: grey;
+    font-family:'Commissioner', sans-serif;
+    font-size: 0.9rem;
+    line-height: 2;
+`;
 const Board = () => 
     <>
   <BoardContainer>
       <BoardTitle>Mastercraft Bamboo Monitor Riser</BoardTitle>
       <BoardText> 
           A beautiful & handcrafted monitor stand toreduce neck and eye strain.
-    </BoardText>  
+    </BoardText> 
+    <ButtonContainer>
    <BoardButton>Back this project </BoardButton> 
-    <BoardButton>Bookmark </BoardButton>
+    <GreyButton>
+        <BookMarkImg src={bookMark} alt="bookmark"/>
+        <BookMark> Bookmark  </BookMark>
+        </GreyButton>
+    </ButtonContainer> 
     </BoardContainer>
     <SecondBoard>
-     $89,914 of $100,000
-     backed 5,007 total backers 56 days left
+     <BoardItem>
+        <BackedAmount>$89,914 </BackedAmount> 
+        <BackedDetails>of $100,000 backed </BackedDetails> 
+    </BoardItem>
+    <BoardItem>
+    <BackedAmount> 5,007  </BackedAmount> 
+   <BackedDetails> total backers </BackedDetails>
+    </BoardItem>
+    <BoardItem>
+    <BackedAmount> 56 </BackedAmount> 
+    <BackedDetails>  days left </BackedDetails> 
+     </BoardItem>
     </SecondBoard>
-    <ThirdBoard>About this project The Mastercraft
+    <ThirdBoard>
+        About this project The Mastercraft
     Bamboo Monitor Riser is a sturdy and stylish platform that elevates your
     screen to a more comfortable viewing height. Placing your monitor at eye
     level has the potential to improve your posture and make you more
