@@ -1,15 +1,21 @@
 import styled from "styled-components";
 import logo from '../assets/logo.svg'
 import background from '../assets/image-hero-desktop.jpg'
+import backgroundMobile from '../assets/image-hero-mobile.jpg'
 
 const TopNav = styled.section`
   display: flex;
   justify-content:center;
-  height: 50vh;
+  width: 100%;
+  padding: 3rem 7.5% 21rem;
+  background-position: center;
+  box-shadow: inset 0 0 15rem rgb(0 0 0);
   background-image: url(${background});
-  background-repeat: no-repeat;
-  padding: 40px 80px;
-  background-size:  100%;
+ background-size: cover;
+  @media (max-width: 768px) {
+    background-position: center;
+    background-image: url(${backgroundMobile});
+   }
 `;
 
 const Nav = styled.nav`
@@ -25,8 +31,8 @@ const NavItem = styled.div`
 color: #fff;
 font-family:'Commissioner', sans-serif;
 font-weight: 700;
-font-size: 0.9rem;
-margin-right: 20px;
+font-size: 1rem;
+margin-right: 5px;
 `;
 
 const Logo = styled.img`
