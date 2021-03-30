@@ -1,7 +1,10 @@
+import {useState} from 'react'
 import styled from "styled-components";
 import logo from '../assets/logo.svg'
 import background from '../assets/image-hero-desktop.jpg'
-import backgroundMobile from '../assets/image-hero-mobile.jpg'
+import backgroundMobile from '../assets/image-hero-mobile.jpg';
+import menu from '../assets/icon-hamburger.svg';
+import closeMenu from '../assets/icon-close-menu.svg';
 
 const TopNav = styled.section`
   display: flex;
@@ -16,15 +19,50 @@ const TopNav = styled.section`
     background-position: center;
     background-image: url(${backgroundMobile});
    }
+   @media(max-width: 512px){
+    flex-wrap: wrap
+    position: relative;
+   }
 `;
 
 const Nav = styled.nav`
  flex:60%;
- ${({right}) => right &&`
+ ${({menu}) => menu && `
+ display: none;
+ @media(max-width: 512px){
+   flex: 40%;
+   display:inline-block;
+   text-align: right;
+ }
+`}
+ ${({right, showMobileMenu}) => right &&`
     flex: 40%;
     display: flex;
-    justify-content: flex-end;
- `}
+    justify-content: space-between;
+    align-items: center;
+    @media(max-width: 512px){
+    display : block;
+    width: 94%;
+    top: 15vh;
+    background: #FFF;
+    position: absolute;
+    z-index: 3;
+    padding: 10px;
+    border-radius: 1rem;
+    box-shadow: 0 0 3rem rgba(0,0,0,0.5);
+    max-height: 0;
+    opacity:0;
+    transition: all 0.5s ease;
+ }
+ ${showMobileMenu && `
+ @media(max-width: 512px){
+    opacity: 1;
+    max-height: 250px;
+    transition: all 0.5s ease;
+    }
+  `}
+`}
+${({showMobileMenu}) => console.log(showMobileMenu, 'holla') }
 `;
 
 const NavItem = styled.div`
@@ -32,25 +70,51 @@ color: #fff;
 font-family:'Commissioner', sans-serif;
 font-weight: 700;
 font-size: 1rem;
-margin-right: 5px;
+${({right}) => right && `
+@media(max-width: 512px){
+  color: #000;
+  padding: 15px 0;
+  border-bottom: 1px solid hsl(0, 0%, 90%);
+  line-height: 2;
+  font-weight: 700;
+  font-size: 1.2rem;
+  &:nth-of-type(3){
+    border-bottom:none;
+    }
+  }
+`}
 `;
 
 const Logo = styled.img`
     width: 100px;
+    @media(max-width: 512px){
+      width: 135px;
+    }
 `
-const TopSection = () => (
-  <TopNav>
+const TopSection = () => {
+  const [showMobileMenu,setShowMobileMenu] = useState(false);
+
+  const handleMobileMenu = () => setShowMobileMenu(!showMobileMenu)
+return (
+<TopNav>
   <Nav>
   <NavItem>
     <Logo src={logo} alt="logo"/>
   </NavItem>
   </Nav>
-    <Nav right>
-      <NavItem> About</NavItem>
-      <NavItem>Discover</NavItem>
-      <NavItem> Get Started</NavItem>
+  <Nav menu onClick={handleMobileMenu}>
+    {
+      !showMobileMenu ? <img  src={menu} alt="menu"/> : <img  src={closeMenu} alt="close_menu"/>
+    }
+    
+  </Nav>
+    <Nav right showMobileMenu={showMobileMenu}>
+      <NavItem right> About</NavItem>
+      <NavItem right>Discover</NavItem>
+      <NavItem right> Get Started</NavItem>
     </Nav>
   </TopNav>
-);
+)
+}
 
 export default TopSection;

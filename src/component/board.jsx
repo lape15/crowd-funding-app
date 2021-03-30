@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import styled from "styled-components";
 import bookMark from "../assets/icon-bookmark.svg";
 import  masterLogo from "../assets/logo-mastercraft.svg"
@@ -105,6 +106,11 @@ const BoardButton = styled.button`
     font-size: 0.8rem;
     outline: none;
     cursor: pointer;
+    transition: o.1s;
+    &:hover{
+        background-color: hsl(176, 72%, 28%);
+     }
+
     @media(max-width: 512px){
         padding:  10px 30px;
         font-size: 0.9rem;
@@ -116,6 +122,10 @@ const GreyButton = styled(BoardButton)`
     background: #F3F3F3;
     padding:  0px 20px 0px 0;
     position: relative;
+    &:hover{
+        background-color: transparent
+        ;
+     }
     @media(max-width: 512px){
         background: none;
     }
