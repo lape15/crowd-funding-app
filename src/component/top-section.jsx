@@ -73,7 +73,7 @@ font-size: 1rem;
 ${({right}) => right && `
 @media(max-width: 512px){
   color: #000;
-  padding: 15px 0;
+  padding: 20px 0;
   border-bottom: 1px solid hsl(0, 0%, 90%);
   line-height: 2;
   font-weight: 700;
