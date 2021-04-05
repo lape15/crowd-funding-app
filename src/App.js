@@ -1,10 +1,13 @@
 import "./App.css";
 import HomePage from "./component/layout";
+import PledgeContextProvider from './context/modal'
 
 function App() {
   return (
     <div className="App">
-      <HomePage />
+      <PledgeContextProvider>
+          <HomePage />
+      </PledgeContextProvider>
     </div>
   );
 }

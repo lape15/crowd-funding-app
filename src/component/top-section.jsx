@@ -62,7 +62,6 @@ const Nav = styled.nav`
     }
   `}
 `}
-${({showMobileMenu}) => console.log(showMobileMenu, 'holla') }
 `;
 
 const NavItem = styled.div`

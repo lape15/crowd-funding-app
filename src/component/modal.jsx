@@ -1,11 +1,11 @@
+import {useContext, useEffect, useRef} from 'react';
 import styled from "styled-components";
+import {PledgeContext} from '../context/modal'
 import close from "../assets/icon-close-modal.svg";
 import {PledgeStock,Stock, PledgeDetails,PledgeTitlte} from '../common/style'
 
 const ModalWrapper = styled.div`
-    position: fixed;
     z-index: 11;
-    border: 2px solid red;
     height: 70vh;
     box-shadow: 0 0 3rem rgb(0 ,0, 0,0.5);
     top: 10vh;
@@ -19,8 +19,23 @@ const ModalWrapper = styled.div`
     transform: scale(0.95);
     background-color: hsl(0, 0%, 100%);
     border: 1px solid hsl(0, 0%, 90%);
+    opacity:0;
     border-radius: 0.5rem;
     font-family:'Commissioner', sans-serif;
+    transition: all ease 0.5s;
+    &::-webkit-scrollbar{
+        -webkit-appearance: none; 
+    }
+    ${({showModal}) => showModal && `
+        opacity: 1;
+        position: fixed;
+        transform: scale(1);
+        transition: all ease 0.5s;
+    `}
+    @media(max-width: 512px){
+        width:100%;
+        left: 0;
+    }
 `;
 
 const ModalHeaderSection =  styled.nav`
@@ -41,6 +56,7 @@ const  ModalCloseContainer = styled.div`
 `;
 
  const ModalClose = styled.img`
+    cursor: pointer;
 `;
 
 const ModalSentence = styled.p`
@@ -51,12 +67,12 @@ color: grey;
 font-family:'Commissioner', sans-serif;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled.form`
 display: flex;
 flex-direction: column;
 `
 
-const PledgeBoardForm = styled.form`
+const PledgeBoardItem = styled.div`
     flex-basis: 100%;
     padding: 2rem 1.5rem;
     border: 1px solid hsl(0, 0%, 90%);
@@ -64,13 +80,35 @@ const PledgeBoardForm = styled.form`
     margin-top: 2rem;
 `
 
-const PledgeInput = styled.div`
-    display: none;
+const PledgeInput = styled.input`
+   display: none;
 `
+const PledgeInputTextWrapper = styled.div`
+    position: relative;
+    &:before{
+    content: "$";
+    font-size: 1rem;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    }
+    @media(max-width: 512px){
+        margin: 15px 0;
+    }
+`;
+
+
+const PledgeInputText= styled.input`
+    padding: 10px 26px;
+    border-radius: 16px;
+    font-size: 1rem;
+    border: 1px solid hsl(0, 0%, 90%);  
+    width: 100%;
+`;
 
 const PledgeRadio = styled.div`
     position: relative;
-    display: block;
+    display: inline-block;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
@@ -82,13 +120,47 @@ const PledgeRadio = styled.div`
 const PledgeModalTitleSection = styled.div`
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 `;
+
+const ModalSectionInput = styled.div`
+    padding: 10px 0px 10px 35px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    @media(max-width: 512px){
+        display: block;
+    }
+`;
+
+const PledgeModalButton = styled.button`
+    padding:  10px 20px;
+    border: none;
+    background: hsl(176, 50%, 47%);
+    color: white;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    transition: background-color o.3s;
+    &:hover{
+    background-color: hsl(176, 72%, 28%);
+    }
+`
+;
+
 const Modal = () => {
- return <ModalWrapper>
+    
+        const {state:{showModal}, dispatch} = useContext(PledgeContext);
+    
+    return <ModalWrapper showModal={showModal}>
         <ModalHeaderSection>
         <ModalCloseContainer>
-            <ModalClose src={close} alt="close"/>
+            <ModalClose src={close} alt="close" onClick={() => dispatch({
+       type: 'SWITCH_MODAL'
+   })}/>
         </ModalCloseContainer>
         <MobileHeader>
             Back this project
@@ -99,32 +171,140 @@ const Modal = () => {
         Riser out in the world?
         </ModalSentence>
         <ModalContent>
-            <PledgeBoardForm>
+            <PledgeBoardItem>
                 <PledgeModalTitleSection>
                 <PledgeTitlte>
                    <PledgeInput type="radio"/> 
                    <PledgeRadio/>
                    <label>Pledge with no reward</label>
                 </PledgeTitlte>
-                <PledgeStock>
+                </PledgeModalTitleSection>
+                <PledgeDetails extra>
+                Choose to support us without a
+                reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email.
+                </PledgeDetails>
+                <ModalSectionInput>
+                    <label>
+                        Enter your pledge
+                    </label>
+                    <PledgeInputTextWrapper>
+
+                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    </PledgeInputTextWrapper>
+
+                    <PledgeModalButton>Continue</PledgeModalButton>
+                </ModalSectionInput>
+            </PledgeBoardItem>
+            <PledgeBoardItem>
+            <PledgeModalTitleSection>
+            <PledgeTitlte>
+                   <PledgeInput type="radio"/> 
+                   <PledgeRadio/>
+                   <label>Bamboo Stand</label>
+                </PledgeTitlte>
+                <PledgeTitlte green>
+                Pledge $25 or more
+                </PledgeTitlte>
+                <PledgeStock right>
                     <Stock>
-                    64 
+                    101
                     </Stock>
                     <span>
                     left
                     </span>
                 </PledgeStock>
                 </PledgeModalTitleSection>
-                <PledgeDetails>
-                Choose to support us without a
-                reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email.
+                <PledgeDetails extra>
+                You
+            get an ergonomic stand made of natural bamboo. You've helped us launch our
+             promotional campaign, and you’ll be added to a special Backer member list.
                 </PledgeDetails>
-            </PledgeBoardForm>
+                <ModalSectionInput>
+                    <label>
+                        Enter your pledge
+                    </label>
+                    <PledgeInputTextWrapper>
+
+                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    </PledgeInputTextWrapper>
+
+                    <PledgeModalButton>Continue</PledgeModalButton>
+                </ModalSectionInput>
+            </PledgeBoardItem>
+            <PledgeBoardItem>
+                <PledgeModalTitleSection>
+                    <PledgeTitlte>
+                    <PledgeInput type="radio"/> 
+                   <PledgeRadio/>
+                   <label>Black Edition Stand</label>
+                    </PledgeTitlte>
+                    <PledgeTitlte green>
+                        Pledge $75 or more
+                    </PledgeTitlte>
+                    <PledgeStock right>
+                    <Stock>
+                    64
+                    </Stock>
+                    <span>
+                    left
+                    </span>
+                </PledgeStock>
+                </PledgeModalTitleSection>
+                <PledgeDetails extra>
+                You
+                get a Black Special Edition computer stand and a personal   thank you. You’ll
+                be added to our Backer member list. Shipping is included.
+                </PledgeDetails>
+                <ModalSectionInput>
+                    <label>
+                        Enter your pledge
+                    </label>
+                    <PledgeInputTextWrapper>
+
+                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    </PledgeInputTextWrapper>
+
+                    <PledgeModalButton>Continue</PledgeModalButton>
+                </ModalSectionInput>
+            </PledgeBoardItem>
+
+            <PledgeBoardItem>
+                <PledgeModalTitleSection>
+                    <PledgeTitlte>
+                    <PledgeInput type="radio"/> 
+                   <PledgeRadio/>
+                   <label>Mahigany Special Edition</label>
+                    </PledgeTitlte>
+                    <PledgeTitlte green>
+                        Pledge $200 or more
+                    </PledgeTitlte>
+                    <PledgeStock right>
+                    <Stock>
+                    0
+                    </Stock>
+                    <span>
+                    left
+                    </span>
+                </PledgeStock>
+                </PledgeModalTitleSection>
+                <PledgeDetails extra>
+                You get two
+                Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you.
+                You’ll be added to our Backer member list. Shipping is included. 0 left.
+                </PledgeDetails>
+                <ModalSectionInput>
+                    <label>
+                        Enter your pledge
+                    </label>
+                    <PledgeInputTextWrapper>
+
+                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    </PledgeInputTextWrapper>
+
+                    <PledgeModalButton>Continue</PledgeModalButton>
+                </ModalSectionInput>
+            </PledgeBoardItem>
         </ModalContent>
-        { /* Bamboo Stand Pledge $25 or more You
-    get an ergonomic stand made of natural bamboo. You've helped us launch our
-    promotional campaign, and you’ll be added to a special Backer member list.
-   101 left */}
     </ModalWrapper>
 }
 

@@ -255,7 +255,10 @@ const PledgeTitlte = styled.div`
     font-weight: 700;
     font-family:'Commissioner', sans-serif;
     margin-bottom: 0.75rem;
-
+  ${({green}) => green && `
+        color: #3EB4AB;
+        margin-top: 10px;
+  `}
 `
 
 const PledgeAmount = styled.div`
@@ -268,6 +271,9 @@ const PledgeAmount = styled.div`
 
 const PledgeDetails = styled(ProjectDetails)`
     margin-top: 5px;
+    ${({extra}) =>  extra && `
+    padding-left: 35px;
+    `}
 `;
 const PledgeRemainderSection = styled(PledgeTitleSection)`
     margin-top: 20px;
@@ -279,6 +285,9 @@ const PledgeRemainderSection = styled(PledgeTitleSection)`
 const PledgeStock = styled(PledgeTitleSection)`
     justify-content: flex-start;
     align-items: center;
+    ${({right}) => right && `
+        justify-content: flex-end;
+    `}
 `;
 const Stock =  styled.h3`
     font-size: 2.25rem;

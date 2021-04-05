@@ -1,7 +1,8 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import bookMark from "../assets/icon-bookmark.svg";
 import  masterLogo from "../assets/logo-mastercraft.svg";
-import bookMarked from "../assets/icon-bookmarked.svg"
+import bookMarked from "../assets/icon-bookmarked.svg";
+import {PledgeContext} from '../context/modal';
 import {  BoardContainer,
     MasterLogo,
     BoardTitle,
@@ -36,7 +37,9 @@ from '../common/style'
 
 const Board = () => {
 
-const [bookmarked,setBookmarked] = useState(false)
+const [bookmarked,setBookmarked] = useState(false);
+
+const {state, dispatch} = useContext(PledgeContext);
 
 const handleBookmarked = () => {
     setBookmarked(!bookmarked)
@@ -50,7 +53,9 @@ const handleBookmarked = () => {
           A beautiful & handcrafted monitor stand toreduce neck and eye strain.
     </BoardText> 
     <ButtonContainer>
-   <BoardButton>Back this project </BoardButton> 
+   <BoardButton onClick={() => dispatch({
+       type: 'SWITCH_MODAL'
+   })}>Back this project </BoardButton> 
     <GreyButton onClick={handleBookmarked}>
         {
             !bookmarked ? <BookMarkImg src={bookMark} alt="bookmark"/> :
