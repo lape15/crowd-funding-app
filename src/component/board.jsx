@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect,useRef} from 'react';
 import bookMark from "../assets/icon-bookmark.svg";
 import  masterLogo from "../assets/logo-mastercraft.svg";
 import bookMarked from "../assets/icon-bookmarked.svg";
@@ -35,11 +35,11 @@ import {  BoardContainer,
 } 
 from '../common/style'
 
-const Board = () => {
+const Board = ({PledgeRefOne,PledgeRefTwo,PledgeRefThree}) => {
 
 const [bookmarked,setBookmarked] = useState(false);
 
-const {state, dispatch} = useContext(PledgeContext);
+const {dispatch} = useContext(PledgeContext);
 
 const handleBookmarked = () => {
     setBookmarked(!bookmarked)
@@ -50,12 +50,14 @@ const handleBookmarked = () => {
       <MasterLogo src={masterLogo} alt="master-craft-logo"/>
       <BoardTitle>Mastercraft Bamboo Monitor Riser</BoardTitle>
       <BoardText> 
-          A beautiful & handcrafted monitor stand toreduce neck and eye strain.
+          A beautiful & handcrafted monitor stand to reduce neck and eye strain.
     </BoardText> 
     <ButtonContainer>
    <BoardButton onClick={() => dispatch({
        type: 'SWITCH_MODAL'
-   })}>Back this project </BoardButton> 
+   })}>
+                    Back this project 
+        </BoardButton> 
     <GreyButton onClick={handleBookmarked}>
         {
             !bookmarked ? <BookMarkImg src={bookMark} alt="bookmark"/> :
@@ -121,8 +123,19 @@ const handleBookmarked = () => {
              <Stock>101 </Stock>
             <span> left</span>
             </PledgeStock>
-         <RewardButton>
-         Select Reward 
+         <RewardButton
+            onClick={() => {dispatch({
+                type: 'SWITCH_MODAL'
+            });
+            PledgeRefOne.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+        }
+
+        }
+         >
+   Select Reward 
          </RewardButton>
         </PledgeRemainderSection>
         </PledgeBoard>
@@ -149,8 +162,19 @@ const handleBookmarked = () => {
                     left
                     </span>
                 </PledgeStock>
-                <RewardButton>
-                Select Reward 
+                <RewardButton
+                onClick={() => {dispatch({
+                    type: 'SWITCH_MODAL'
+                });
+                PledgeRefTwo.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                  });
+            
+            }
+            }
+                >
+               Select Reward
                 </RewardButton>
             </PledgeRemainderSection>
      </PledgeBoard>
@@ -179,8 +203,18 @@ const handleBookmarked = () => {
                     left
                 </span>
             </PledgeStock>
-            <RewardButton>
-                Select Reward
+            <RewardButton
+            onClick={() => {dispatch({
+                type: 'SWITCH_MODAL'
+            });
+            PledgeRefThree.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              });
+        }
+        }
+            >
+              Select Reward
             </RewardButton>
          </PledgeRemainderSection>
     </PledgeBoard>

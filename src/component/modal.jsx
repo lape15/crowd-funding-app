@@ -21,8 +21,8 @@ const ModalWrapper = styled.div`
     border: 1px solid hsl(0, 0%, 90%);
     opacity:0;
     border-radius: 0.5rem;
+    transform-origin: center;
     font-family:'Commissioner', sans-serif;
-    transition: all ease 0.5s;
     &::-webkit-scrollbar{
         -webkit-appearance: none; 
     }
@@ -30,6 +30,7 @@ const ModalWrapper = styled.div`
         opacity: 1;
         position: fixed;
         transform: scale(1);
+        transform-origin: center;
         transition: all ease 0.5s;
     `}
     @media(max-width: 512px){
@@ -151,7 +152,7 @@ const PledgeModalButton = styled.button`
 `
 ;
 
-const Modal = () => {
+const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
     
         const {state:{showModal}, dispatch} = useContext(PledgeContext);
     
@@ -195,7 +196,7 @@ const Modal = () => {
                     <PledgeModalButton>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
-            <PledgeBoardItem>
+            <PledgeBoardItem  ref={PledgeRefOne}>
             <PledgeModalTitleSection>
             <PledgeTitlte>
                    <PledgeInput type="radio"/> 
@@ -231,7 +232,7 @@ const Modal = () => {
                     <PledgeModalButton>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
-            <PledgeBoardItem>
+            <PledgeBoardItem ref={PledgeRefTwo}>
                 <PledgeModalTitleSection>
                     <PledgeTitlte>
                     <PledgeInput type="radio"/> 
@@ -268,12 +269,12 @@ const Modal = () => {
                 </ModalSectionInput>
             </PledgeBoardItem>
 
-            <PledgeBoardItem>
+            <PledgeBoardItem ref={PledgeRefThree}>
                 <PledgeModalTitleSection>
                     <PledgeTitlte>
                     <PledgeInput type="radio"/> 
                    <PledgeRadio/>
-                   <label>Mahigany Special Edition</label>
+                   <label>Mahogany Special Edition</label>
                     </PledgeTitlte>
                     <PledgeTitlte green>
                         Pledge $200 or more
