@@ -28,6 +28,11 @@ ${({showThanksModal}) => showThanksModal && `
     transform-origin: center;
     transition: all ease 0.5s;
 `}
+@media (max-width: 512px) {
+   width:100%;
+    left:0;
+    right:0;
+  }
 `;
 
 const PledgeButton = styled.button`
