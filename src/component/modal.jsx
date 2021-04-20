@@ -1,206 +1,118 @@
-import {useContext, useEffect, useRef} from 'react';
-import styled from "styled-components";
+import {useContext, useState, useEffect} from 'react';
 import {PledgeContext} from '../context/modal'
+import {
+    ModalWrapper,
+    ModalHeaderSection,
+    ModalHeader,
+    ModalCloseContainer,
+    ModalClose ,
+    ModalSentence,
+    ModalContent,
+    PledgeBoardItem,
+    PledgeInput,
+    PledgeInputTextWrapper,
+    PledgeInputText,
+    PledgeRadio,
+    PledgeModalTitleSection,
+    ModalSectionInput,
+    PledgeModalButton
+} from '../common/modal-style'
 import close from "../assets/icon-close-modal.svg";
 import {PledgeStock,Stock, PledgeDetails,PledgeTitlte} from '../common/style'
 
-const ModalWrapper = styled.div`
-    z-index: 11;
-    height: 70vh;
-    box-shadow: 0 0 3rem rgb(0 ,0, 0,0.5);
-    top: 10vh;
-    margin: 0;
-    padding: 3rem 1.8rem;
-    overflow-y: scroll;
-    outline: none;
-    border: none;
-    width: 700px;
-    left:  calc(50% - 350px);
-    transform: scale(0.95);
-    background-color: hsl(0, 0%, 100%);
-    border: 1px solid hsl(0, 0%, 90%);
-    opacity:0;
-    border-radius: 0.5rem;
-    transform-origin: center;
-    font-family:'Commissioner', sans-serif;
-    &::-webkit-scrollbar{
-        -webkit-appearance: none; 
-    }
-    ${({showModal}) => showModal && `
-        opacity: 1;
-        position: fixed;
-        transform: scale(1);
-        transform-origin: center;
-        transition: all ease 0.5s;
-    `}
-    @media(max-width: 512px){
-        width:100%;
-        left: 0;
-    }
-`;
 
-const ModalHeaderSection =  styled.nav`
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    font-family:'Commissioner', sans-serif;
-`;
-
- const MobileHeader= styled.h3`
-    font-weight: 700;
-    width: 100%;
-`
-const  ModalCloseContainer = styled.div`
-    width: 100%;
-    text-align: right;
-    margin-bottom: 1rem
-`;
-
- const ModalClose = styled.img`
-    cursor: pointer;
-`;
-
-const ModalSentence = styled.p`
-margin-top: 10px;
-font-size: 1rem;
-line-height: 2;
-color: grey;
-font-family:'Commissioner', sans-serif;
-`;
-
-const ModalContent = styled.form`
-display: flex;
-flex-direction: column;
-`
-
-const PledgeBoardItem = styled.div`
-    flex-basis: 100%;
-    padding: 2rem 1.5rem;
-    border: 1px solid hsl(0, 0%, 90%);
-    border-radius: 0.5rem;
-    margin-top: 2rem;
-`
-
-const PledgeInput = styled.input`
-   display: none;
-`
-const PledgeInputTextWrapper = styled.div`
-    position: relative;
-    &:before{
-    content: "$";
-    font-size: 1rem;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    }
-    @media(max-width: 512px){
-        margin: 15px 0;
-    }
-`;
-
-
-const PledgeInputText= styled.input`
-    padding: 10px 26px;
-    border-radius: 16px;
-    font-size: 1rem;
-    border: 1px solid hsl(0, 0%, 90%);  
-    width: 100%;
-`;
-
-const PledgeRadio = styled.div`
-    position: relative;
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    border: 1px solid hsl(0, 0%, 90%);
-    margin-right: 1rem;
-    flex-shrink: 0;
-    transition: border-color 0.25s ease;
-`
-const PledgeModalTitleSection = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-`;
-
-const ModalSectionInput = styled.div`
-    padding: 10px 0px 10px 35px;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
-    @media(max-width: 512px){
-        display: block;
-    }
-`;
-
-const PledgeModalButton = styled.button`
-    padding:  10px 20px;
-    border: none;
-    background: hsl(176, 50%, 47%);
-    color: white;
-    font-weight: 700;
-    border-radius: 20px;
-    font-size: 1rem;
-    outline: none;
-    cursor: pointer;
-    transition: background-color o.3s;
-    &:hover{
-    background-color: hsl(176, 72%, 28%);
-    }
-`
-;
 
 const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
+
+        const [modalInputState, setModalInoutState]= useState({
+            noReward: '',
+            bambooEdition:'',
+            blackEdition:'',
+            mahoganyEditon:''
+           
+        })
+
+        const {state:{showModal, noRewardActive,
+            bambooEditionActive,
+            blackEditionActive,
+            mahoganyEditonActive}, dispatch} = useContext(PledgeContext);
+
+        const handlePledgeChange = e => {
+            setModalInoutState({
+                ...modalInputState,
+                [e.target.name] : e.target.value
+            })
+        }
+
+        const handlePledgeSubmit = e => {
+            const {noReward,bambooEdition,blackEdition,mahoganyEditon} = modalInputState
+            e.preventDefault();
+            if(!noReward){
+                return 
+            } else {
+                dispatch({
+                    type: 'UPDATE_BACKED_AMOUNT',
+                    payload: Number(noReward),
+                })
+                dispatch({
+                    type: 'SWITCH_MODAL'
+                })
+            }
+        }
     
-        const {state:{showModal}, dispatch} = useContext(PledgeContext);
-    
-    return <ModalWrapper showModal={showModal}>
+    return ( 
+    <ModalWrapper showModal={showModal}>
         <ModalHeaderSection>
         <ModalCloseContainer>
             <ModalClose src={close} alt="close" onClick={() => dispatch({
        type: 'SWITCH_MODAL'
    })}/>
         </ModalCloseContainer>
-        <MobileHeader>
+        <ModalHeader>
             Back this project
-        </MobileHeader>
+        </ModalHeader>
         </ModalHeaderSection>
         <ModalSentence>
         Want to support us in bringing Mastercraft Bamboo Monitor
         Riser out in the world?
         </ModalSentence>
-        <ModalContent>
-            <PledgeBoardItem>
+        <ModalContent onSubmit={handlePledgeSubmit}>
+            <PledgeBoardItem noReward={noRewardActive}>
                 <PledgeModalTitleSection>
-                <PledgeTitlte>
+                <PledgeTitlte modal onClick={() => dispatch({
+                    type : 'NO_REWARD_ACTIVE'
+                })} noReward={noRewardActive}>
                    <PledgeInput type="radio"/> 
-                   <PledgeRadio/>
-                   <label>Pledge with no reward</label>
+                   <PledgeRadio className="pledge_radio" noReward={noRewardActive}/>
+                   <label style={{
+                       cursor: 'pointer'
+                   }}>Pledge with no reward</label>
                 </PledgeTitlte>
                 </PledgeModalTitleSection>
                 <PledgeDetails extra>
                 Choose to support us without a
                 reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email.
                 </PledgeDetails>
-                <ModalSectionInput>
+                <ModalSectionInput noReward={noRewardActive}>
                     <label>
                         Enter your pledge
                     </label>
                     <PledgeInputTextWrapper>
 
-                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    <PledgeInputText type="text" value={modalInputState.noReward} placeholder="0.00" name="noReward" onChange={handlePledgeChange}/>
                     </PledgeInputTextWrapper>
 
                     <PledgeModalButton>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
-            <PledgeBoardItem  ref={PledgeRefOne}>
+            <PledgeBoardItem  ref={PledgeRefOne} bamboo={bambooEditionActive}>
             <PledgeModalTitleSection>
-            <PledgeTitlte>
+            <PledgeTitlte modal onClick={() => dispatch({
+                type: 'BAMBOO_ACTIVE'
+            })} 
+                bamboo={bambooEditionActive}>
                    <PledgeInput type="radio"/> 
-                   <PledgeRadio/>
+                   <PledgeRadio className="pledge_radio" bamboo={bambooEditionActive}/>
                    <label>Bamboo Stand</label>
                 </PledgeTitlte>
                 <PledgeTitlte green>
@@ -220,23 +132,27 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
             get an ergonomic stand made of natural bamboo. You've helped us launch our
              promotional campaign, and you’ll be added to a special Backer member list.
                 </PledgeDetails>
-                <ModalSectionInput>
+                <ModalSectionInput bamboo={bambooEditionActive}>
                     <label>
                         Enter your pledge
                     </label>
                     <PledgeInputTextWrapper>
 
-                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    <PledgeInputText type="text" value={modalInputState.bambooEdition} placeholder="0.00" name="bambooEdition"
+                    onChange={handlePledgeChange}
+                    />
                     </PledgeInputTextWrapper>
 
                     <PledgeModalButton>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
-            <PledgeBoardItem ref={PledgeRefTwo}>
+            <PledgeBoardItem ref={PledgeRefTwo} black={blackEditionActive}>
                 <PledgeModalTitleSection>
-                    <PledgeTitlte>
+                    <PledgeTitlte modal onClick={() => dispatch({
+                        type: 'BLACK_ACTIVE'
+                    })} black={blackEditionActive}>
                     <PledgeInput type="radio"/> 
-                   <PledgeRadio/>
+                   <PledgeRadio className="pledge_radio" black={blackEditionActive}/>
                    <label>Black Edition Stand</label>
                     </PledgeTitlte>
                     <PledgeTitlte green>
@@ -256,24 +172,28 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                 get a Black Special Edition computer stand and a personal   thank you. You’ll
                 be added to our Backer member list. Shipping is included.
                 </PledgeDetails>
-                <ModalSectionInput>
+                <ModalSectionInput black={blackEditionActive}>
                     <label>
                         Enter your pledge
                     </label>
                     <PledgeInputTextWrapper>
 
-                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    <PledgeInputText type="text" 
+                    onChange={handlePledgeChange}
+                    value={modalInputState.blackEdition} placeholder="0.00" name="blackEdition"/>
                     </PledgeInputTextWrapper>
 
                     <PledgeModalButton>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
 
-            <PledgeBoardItem ref={PledgeRefThree}>
+            <PledgeBoardItem ref={PledgeRefThree} mahogany={mahoganyEditonActive}>
                 <PledgeModalTitleSection>
-                    <PledgeTitlte>
+                    <PledgeTitlte modal onClick={ () => dispatch({
+                        type: 'MAHOGANY_ACTIVE'
+                    })} mahogany={mahoganyEditonActive}>
                     <PledgeInput type="radio"/> 
-                   <PledgeRadio/>
+                   <PledgeRadio className="pledge_radio" mahogany={mahoganyEditonActive}/>
                    <label>Mahogany Special Edition</label>
                     </PledgeTitlte>
                     <PledgeTitlte green>
@@ -293,13 +213,15 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                 Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you.
                 You’ll be added to our Backer member list. Shipping is included. 0 left.
                 </PledgeDetails>
-                <ModalSectionInput>
+                <ModalSectionInput mahogany={mahoganyEditonActive}>
                     <label>
                         Enter your pledge
                     </label>
                     <PledgeInputTextWrapper>
 
-                    <PledgeInputText type="text" value="" placeholder="0.00"/>
+                    <PledgeInputText type="text" value={modalInputState.mahoganyEditon} 
+                    onChange={handlePledgeChange}
+                    placeholder="0.00" name="mahoganyEditon"/>
                     </PledgeInputTextWrapper>
 
                     <PledgeModalButton>Continue</PledgeModalButton>
@@ -307,6 +229,7 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
             </PledgeBoardItem>
         </ModalContent>
     </ModalWrapper>
+)
 }
 
 export default Modal;

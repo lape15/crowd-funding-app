@@ -18,10 +18,12 @@ const HomePage = () => {
       return;
     }
     if(!parentNode.current.contains(e.target) && !showModal) {
-      // return;
       dispatch({
-          type: 'CLOSE_MODAL'
+          type: 'CLOSE_MODAL',
       })
+      dispatch({
+        type: 'RESET_PLEDGE',
+    })
     }
 
   }

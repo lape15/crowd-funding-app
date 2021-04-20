@@ -259,6 +259,18 @@ const PledgeTitlte = styled.div`
         color: #3EB4AB;
         margin-top: 10px;
   `}
+  ${({modal}) => modal && `
+   cursor: pointer;
+  &:hover > label {
+    color: hsl(176, 50%, 47%);
+  }
+  &:hover > .pledge_radio{
+    border-color: hsl(176, 50%, 47%);
+  }
+`}
+${({noReward, bamboo,black,mahogany}) => (noReward || black|| bamboo|| mahogany) && `
+    color: hsl(176, 50%, 47%);  
+`}
 `
 
 const PledgeAmount = styled.div`

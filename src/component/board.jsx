@@ -39,7 +39,7 @@ const Board = ({PledgeRefOne,PledgeRefTwo,PledgeRefThree}) => {
 
 const [bookmarked,setBookmarked] = useState(false);
 
-const {dispatch} = useContext(PledgeContext);
+const {dispatch, state:{backedAmount, backers,daysLeft }} = useContext(PledgeContext);
 
 const handleBookmarked = () => {
     setBookmarked(!bookmarked)
@@ -73,15 +73,15 @@ const handleBookmarked = () => {
     <SecondBoard>
     <BoardItemContainer>
      <BoardItem>
-        <BackedAmount><h2>$89,914 </h2></BackedAmount> 
+        <BackedAmount><h2>${backedAmount.toLocaleString()}</h2></BackedAmount> 
         <BackedDetails>of $100,000 backed </BackedDetails> 
     </BoardItem>
     <BoardItem>
-    <BackedAmount> <h2>5,007 </h2> </BackedAmount> 
+    <BackedAmount> <h2>{backers.toLocaleString()} </h2> </BackedAmount> 
    <BackedDetails> total backers </BackedDetails>
     </BoardItem>
     <BoardItem>
-    <BackedAmount> <h2>56 </h2> </BackedAmount> 
+    <BackedAmount> <h2>{daysLeft}</h2> </BackedAmount> 
     <BackedDetails>  days left </BackedDetails> 
      </BoardItem>
      </BoardItemContainer>
@@ -131,6 +131,10 @@ const handleBookmarked = () => {
                 behavior: 'smooth',
                 block: 'start',
               });
+              dispatch({
+                type: 'BAMBOO_ACTIVE'
+            })
+
         }
 
         }
@@ -170,7 +174,9 @@ const handleBookmarked = () => {
                     behavior: 'smooth',
                     block: 'start',
                   });
-            
+                  dispatch({
+                    type: 'BLACK_ACTIVE'
+                })
             }
             }
                 >
@@ -211,7 +217,10 @@ const handleBookmarked = () => {
                 behavior: 'smooth',
                 block: 'start',
               });
-        }
+              dispatch({
+                type: 'MAHOGANY_ACTIVE'
+                })
+            }
         }
             >
               Select Reward
