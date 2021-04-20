@@ -3,4 +3,5 @@
   font-family: "Commissioner", sans-serif;
   position: relative;
   background-color: rgba(207, 207, 207,0.1);
+  overflow-x: hidden;
 }
