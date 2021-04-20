@@ -79,14 +79,14 @@ height: 160px;
 max-height: 160px;
 transition: all ease 0.5;
 @media (max-width: 512px) {
-    max-height: 380px;
+    max-height: 450px;
   }
 ${({noReward,bamboo,black,mahogany }) => (noReward || black || bamboo || mahogany )&& `
     border-color: hsl(176, 50%, 47%);
     max-height: 400px;
     transition: all ease 0.5;
     @media (max-width: 512px) {
-        max-height: 520px;
+        max-height: 600px;
       }
 `}
 ${({mahoganyLeft}) => mahoganyLeft === 0 && `
