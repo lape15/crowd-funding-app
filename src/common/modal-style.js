@@ -64,7 +64,7 @@ color: grey;
 font-family:'Commissioner', sans-serif;
 `;
 
-const ModalContent = styled.form`
+const ModalContent = styled.div`
 display: flex;
 flex-direction: column;
 `
@@ -82,6 +82,11 @@ ${({noReward,bamboo,black,mahogany }) => (noReward || black || bamboo || mahogan
     border-color: hsl(176, 50%, 47%);
     max-height: 400px;
     transition: all ease 0.5;
+`}
+${({mahoganyLeft}) => mahoganyLeft === 0 && `
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.5s ease;
 `}
 `
 

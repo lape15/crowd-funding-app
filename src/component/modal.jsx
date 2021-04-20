@@ -1,4 +1,4 @@
-import {useContext, useState, useEffect} from 'react';
+import {useContext, useState} from 'react';
 import {PledgeContext} from '../context/modal'
 import {
     ModalWrapper,
@@ -16,7 +16,8 @@ import {
     PledgeModalTitleSection,
     ModalSectionInput,
     PledgeModalButton
-} from '../common/modal-style'
+} from '../common/modal-style';
+import {flagErrorBamboo, flagErrorBlack, flagErrorMahogany, filterOutInvalid  } from '../common/utils';
 import close from "../assets/icon-close-modal.svg";
 import {PledgeStock,Stock, PledgeDetails,PledgeTitlte} from '../common/style'
 
@@ -24,42 +25,125 @@ import {PledgeStock,Stock, PledgeDetails,PledgeTitlte} from '../common/style'
 
 const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
 
-        const [modalInputState, setModalInoutState]= useState({
+        const [modalInputState, setModalInputState]= useState({
             noReward: '',
             bambooEdition:'',
             blackEdition:'',
-            mahoganyEditon:''
+            mahoganyEdition:''
            
         })
+        const [error,setError] = useState('')
 
         const {state:{showModal, noRewardActive,
             bambooEditionActive,
             blackEditionActive,
-            mahoganyEditonActive}, dispatch} = useContext(PledgeContext);
+            mahoganyEditionActive,
+            bambooLeft, blackLeft, mahoganyLeft 
+        }, dispatch} = useContext(PledgeContext);
 
         const handlePledgeChange = e => {
-            setModalInoutState({
+            setError('')
+            setModalInputState({
                 ...modalInputState,
                 [e.target.name] : e.target.value
             })
         }
 
-        const handlePledgeSubmit = e => {
-            const {noReward,bambooEdition,blackEdition,mahoganyEditon} = modalInputState
-            e.preventDefault();
-            if(!noReward){
-                return 
-            } else {
-                dispatch({
-                    type: 'UPDATE_BACKED_AMOUNT',
-                    payload: Number(noReward),
-                })
-                dispatch({
-                    type: 'SWITCH_MODAL'
-                })
-            }
+    const refreshModalInputState = () => {
+            setModalInputState({
+                noReward: '',
+                bambooEdition:'',
+                blackEdition:'',
+                mahoganyEdition:''
+               
+            })
         }
+         
+
+    const handleNoRewardPledge = value => {
+    if(filterOutInvalid(value)){
+        setError('Make your pledge count!');
+        return;
+    } else {
+        dispatch({
+            type: 'UPDATE_BACKED_AMOUNT',
+            payload: Number(value),
+        })
+    }
+    dispatch({
+        type: 'SWITCH_MODAL'
+    })
+    refreshModalInputState()
+    }
+  
+    const handleBambooPledge = value => {
+    if(filterOutInvalid(value)){
+        setError('Make your pledge count!')
+        return;
+    } else if (flagErrorBamboo(value)){
+        setError('Do not be a cheap skate, make it count!')
+        return;
+    } else {
+        dispatch({
+            type: 'UPDATE_BACKED_AMOUNT',
+            payload: Number(value),
+        })
+    } 
     
+    dispatch({
+        type: 'UPDATE_BAMBOO_LEFT'
+    })
+    dispatch({
+        type: 'SWITCH_MODAL'
+    })
+    refreshModalInputState()
+}
+
+const handleBlackPledge = value => {
+    if(filterOutInvalid(value)){
+        setError('Make your pledge count!')
+        return;
+    } else if (flagErrorBlack(value)){
+        setError('Do not be a cheap skate, make it count!');
+        return;
+    } else {
+        dispatch({
+            type: 'UPDATE_BACKED_AMOUNT',
+            payload: Number(value),
+        })
+    }
+    dispatch({
+        type: 'UPDATE_BLACK_LEFT'
+    })
+    dispatch({
+        type: 'SWITCH_MODAL'
+    })
+    refreshModalInputState()
+}
+
+const handleMahoganyPledge = value => {
+    if(filterOutInvalid(value)){
+        setError('Make your pledge count!');
+        return;
+    } else if (flagErrorMahogany(value)){
+        setError('Do not be a cheap skate, make it count!');
+        return;
+    } else {
+        dispatch({
+            type: 'UPDATE_BACKED_AMOUNT',
+            payload: Number(value),
+        })
+    }
+    dispatch({
+        type: 'UPDATE_MAHOGANY_LEFT'
+    })
+    dispatch({
+        type: 'SWITCH_MODAL'
+    })
+    refreshModalInputState()
+
+}
+
     return ( 
     <ModalWrapper showModal={showModal}>
         <ModalHeaderSection>
@@ -76,7 +160,7 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
         Want to support us in bringing Mastercraft Bamboo Monitor
         Riser out in the world?
         </ModalSentence>
-        <ModalContent onSubmit={handlePledgeSubmit}>
+        <ModalContent >
             <PledgeBoardItem noReward={noRewardActive}>
                 <PledgeModalTitleSection>
                 <PledgeTitlte modal onClick={() => dispatch({
@@ -102,7 +186,7 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                     <PledgeInputText type="text" value={modalInputState.noReward} placeholder="0.00" name="noReward" onChange={handlePledgeChange}/>
                     </PledgeInputTextWrapper>
 
-                    <PledgeModalButton>Continue</PledgeModalButton>
+                    <PledgeModalButton onClick={() => handleNoRewardPledge(modalInputState.noReward)}>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
             <PledgeBoardItem  ref={PledgeRefOne} bamboo={bambooEditionActive}>
@@ -113,14 +197,16 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                 bamboo={bambooEditionActive}>
                    <PledgeInput type="radio"/> 
                    <PledgeRadio className="pledge_radio" bamboo={bambooEditionActive}/>
-                   <label>Bamboo Stand</label>
+                   <label style={{
+                       cursor: 'pointer'
+                   }}>Bamboo Stand</label>
                 </PledgeTitlte>
                 <PledgeTitlte green>
                 Pledge $25 or more
                 </PledgeTitlte>
                 <PledgeStock right>
                     <Stock>
-                    101
+                    {bambooLeft}
                     </Stock>
                     <span>
                     left
@@ -141,9 +227,17 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                     <PledgeInputText type="text" value={modalInputState.bambooEdition} placeholder="0.00" name="bambooEdition"
                     onChange={handlePledgeChange}
                     />
+                     <p style={{
+                        color: 'red',
+                        fontSize: '0.9rem',
+                        marginTop: '5px'
+                    }}>{error}</p>
                     </PledgeInputTextWrapper>
 
-                    <PledgeModalButton>Continue</PledgeModalButton>
+                    <PledgeModalButton onClick={() => {
+                        console.log(modalInputState.bambooEdition, 'hmmm', error)
+                        handleBambooPledge(modalInputState.bambooEdition)
+                    }}>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
             <PledgeBoardItem ref={PledgeRefTwo} black={blackEditionActive}>
@@ -153,14 +247,16 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                     })} black={blackEditionActive}>
                     <PledgeInput type="radio"/> 
                    <PledgeRadio className="pledge_radio" black={blackEditionActive}/>
-                   <label>Black Edition Stand</label>
+                   <label style={{
+                       cursor: 'pointer'
+                   }}>Black Edition Stand</label>
                     </PledgeTitlte>
                     <PledgeTitlte green>
                         Pledge $75 or more
                     </PledgeTitlte>
                     <PledgeStock right>
                     <Stock>
-                    64
+                    {blackLeft}
                     </Stock>
                     <span>
                     left
@@ -181,27 +277,34 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                     <PledgeInputText type="text" 
                     onChange={handlePledgeChange}
                     value={modalInputState.blackEdition} placeholder="0.00" name="blackEdition"/>
+                     <p style={{
+                        color: 'red',
+                        fontSize: '0.9rem',
+                        marginTop: '5px'
+                    }}>{error}</p>
                     </PledgeInputTextWrapper>
 
-                    <PledgeModalButton>Continue</PledgeModalButton>
+                    <PledgeModalButton onClick={() => {handleBlackPledge(modalInputState.blackEdition)}}>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
 
-            <PledgeBoardItem ref={PledgeRefThree} mahogany={mahoganyEditonActive}>
+            <PledgeBoardItem ref={PledgeRefThree} mahogany={mahoganyEditionActive} mahoganyLeft={mahoganyLeft}>
                 <PledgeModalTitleSection>
                     <PledgeTitlte modal onClick={ () => dispatch({
                         type: 'MAHOGANY_ACTIVE'
-                    })} mahogany={mahoganyEditonActive}>
+                    })} mahogany={mahoganyEditionActive}>
                     <PledgeInput type="radio"/> 
-                   <PledgeRadio className="pledge_radio" mahogany={mahoganyEditonActive}/>
-                   <label>Mahogany Special Edition</label>
+                   <PledgeRadio className="pledge_radio" mahogany={mahoganyEditionActive}/>
+                   <label style={{
+                       cursor: 'pointer'
+                   }}>Mahogany Special Edition</label>
                     </PledgeTitlte>
                     <PledgeTitlte green>
                         Pledge $200 or more
                     </PledgeTitlte>
                     <PledgeStock right>
                     <Stock>
-                    0
+                    {mahoganyLeft}
                     </Stock>
                     <span>
                     left
@@ -213,18 +316,23 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
                 Special Edition Mahogany stands, a Backer T-Shirt, and a personal thank you.
                 You’ll be added to our Backer member list. Shipping is included. 0 left.
                 </PledgeDetails>
-                <ModalSectionInput mahogany={mahoganyEditonActive}>
+                <ModalSectionInput mahogany={mahoganyEditionActive}>
                     <label>
                         Enter your pledge
                     </label>
                     <PledgeInputTextWrapper>
 
-                    <PledgeInputText type="text" value={modalInputState.mahoganyEditon} 
+                    <PledgeInputText type="text" value={modalInputState.mahoganyEdition} 
                     onChange={handlePledgeChange}
-                    placeholder="0.00" name="mahoganyEditon"/>
+                    placeholder="0.00" name="mahoganyEdition"/>
+                     <p style={{
+                        color: 'red',
+                        fontSize: '0.9rem',
+                        marginTop: '5px'
+                    }}>{error}</p>
                     </PledgeInputTextWrapper>
 
-                    <PledgeModalButton>Continue</PledgeModalButton>
+                    <PledgeModalButton onClick={() =>  handleMahoganyPledge(modalInputState.mahoganyEdition) }>Continue</PledgeModalButton>
                 </ModalSectionInput>
             </PledgeBoardItem>
         </ModalContent>

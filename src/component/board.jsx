@@ -39,7 +39,7 @@ const Board = ({PledgeRefOne,PledgeRefTwo,PledgeRefThree}) => {
 
 const [bookmarked,setBookmarked] = useState(false);
 
-const {dispatch, state:{backedAmount, backers,daysLeft }} = useContext(PledgeContext);
+const {dispatch, state:{backedAmount, backers,daysLeft, bambooLeft, blackLeft, mahoganyLeft }} = useContext(PledgeContext);
 
 const handleBookmarked = () => {
     setBookmarked(!bookmarked)
@@ -120,7 +120,7 @@ const handleBookmarked = () => {
         </PledgeDetails>
         <PledgeRemainderSection>
             <PledgeStock>
-             <Stock>101 </Stock>
+             <Stock>{bambooLeft}</Stock>
             <span> left</span>
             </PledgeStock>
          <RewardButton
@@ -160,7 +160,7 @@ const handleBookmarked = () => {
             <PledgeRemainderSection>
                 <PledgeStock>
                     <Stock>
-                    64 
+                    {blackLeft}
                     </Stock>
                     <span>
                     left
@@ -184,7 +184,7 @@ const handleBookmarked = () => {
                 </RewardButton>
             </PledgeRemainderSection>
      </PledgeBoard>
-     <PledgeBoard>
+     <PledgeBoard  mahoganyLeft={mahoganyLeft}>
          <PledgeTitleSection>
              <PledgeTitlte>
              Mahogany
@@ -203,7 +203,7 @@ const handleBookmarked = () => {
          <PledgeRemainderSection>
             <PledgeStock>
                 <Stock>
-                    2
+                    {mahoganyLeft}
                 </Stock>
                 <span>
                     left

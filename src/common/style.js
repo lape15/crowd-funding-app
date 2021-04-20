@@ -242,7 +242,11 @@ const PledgeBoard = styled.div`
     border: 1px solid hsl(0, 0%, 90%);
     border-radius: 0.5rem;
     margin-top: 2rem;
-
+${({mahoganyLeft}) => mahoganyLeft === 0 && `
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.5s ease;
+`}
 `
 const PledgeTitleSection = styled.div`
     display: flex;

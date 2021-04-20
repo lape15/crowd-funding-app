@@ -9,7 +9,10 @@ const initialState = {
     noRewardActive: false,
     bambooEditionActive: false,
     blackEditionActive:false,
-    mahoganyEditonActive: false,
+    mahoganyEditionActive: false,
+    bambooLeft: 101,
+    blackLeft: 64,
+    mahoganyLeft: 2,
 }
 
 
@@ -33,6 +36,21 @@ function modalReducer (state , action){
                         backedAmount: state.backedAmount + payload,
                         backers: state.backers + 1
             };
+            case'UPDATE_BAMBOO_LEFT':
+            return{
+                ...state,
+                bambooLeft: state.bambooLeft - 1,
+            };
+            case'UPDATE_BLACK_LEFT':
+            return{
+                ...state,
+                blackLeft: state.blackLeft - 1,
+            };
+            case'UPDATE_MAHOGANY_LEFT':
+            return{
+                ...state,
+                mahoganyLeft: state.mahoganyLeft - 1,
+            };
             case 'NO_REWARD_ACTIVE':
                 return {
                     ...state,
@@ -47,7 +65,7 @@ function modalReducer (state , action){
                         bambooEditionActive: true,
                         noRewardActive: false,
                         blackEditionActive:false,
-                        mahoganyEditonActive: false,
+                        mahoganyEditionActive: false,
                     };
                     case 'BLACK_ACTIVE':
                         return {
@@ -55,12 +73,12 @@ function modalReducer (state , action){
                             blackEditionActive: true,
                             noRewardActive: false,
                             bambooEditionActive:false,
-                            mahoganyEditonActive: false,
+                            mahoganyEditionActive: false,
                         };
                         case 'MAHOGANY_ACTIVE':
                             return {
                                 ...state,
-                                mahoganyEditonActive: true,
+                                mahoganyEditionActive: true,
                                 blackEditionActive: false,
                                 noRewardActive: false,
                                 bambooEditionActive:false,
@@ -68,7 +86,7 @@ function modalReducer (state , action){
                         case 'RESET_PLEDGE':
                             return {
                                 ...state,
-                                mahoganyEditonActive: false,
+                                mahoganyEditionActive: false,
                                 blackEditionActive: false,
                                 noRewardActive: false,
                                 bambooEditionActive:false,
