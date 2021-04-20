@@ -3,6 +3,7 @@ import Board from "./board";
 import Modal from "./modal";
 import TopSection from "./top-section";
 import {PledgeContext} from '../context/modal'
+import ThanksModal from './thanks-modal';
 
 
 const HomePage = () => {
@@ -40,13 +41,10 @@ const HomePage = () => {
     <TopSection />
     {/* Selected pledge start */}
     <Board PledgeRefOne={PledgeRefOne} PledgeRefTwo={PledgeRefTwo} PledgeRefThree={PledgeRefThree}/>
-   {/* 
-    Enter your pledge $200 Continue Thanks for your support! Your pledge brings
-    us one step closer to sharing Mastercraft Bamboo Monitor Riser worldwide.
-   You will get an email once our campaign is completed. Got it! */}
     <div ref={parentNode}>
     < Modal PledgeRefOne={PledgeRefOne} PledgeRefTwo={PledgeRefTwo} PledgeRefThree={PledgeRefThree}/>
     </div>
+    <ThanksModal/>
   </div>
 };
 

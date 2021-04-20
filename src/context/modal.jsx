@@ -13,6 +13,7 @@ const initialState = {
     bambooLeft: 101,
     blackLeft: 64,
     mahoganyLeft: 2,
+    showThanksModal: false,
 }
 
 
@@ -90,8 +91,16 @@ function modalReducer (state , action){
                                 blackEditionActive: false,
                                 noRewardActive: false,
                                 bambooEditionActive:false,
+                            };
+
+                        case 'THANKS_MODAL_ACTIVE':
+                            return{
+                                ...state,
+                                showModal: false,
+                                showThanksModal: !state.showThanksModal,
                             }
-            default:
+
+                         default:
                 return state;
     }
 }

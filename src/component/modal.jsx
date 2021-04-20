@@ -71,7 +71,7 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
         })
     }
     dispatch({
-        type: 'SWITCH_MODAL'
+        type: 'THANKS_MODAL_ACTIVE'
     })
     refreshModalInputState()
     }
@@ -94,7 +94,7 @@ const Modal = ({PledgeRefOne,PledgeRefThree,PledgeRefTwo}) => {
         type: 'UPDATE_BAMBOO_LEFT'
     })
     dispatch({
-        type: 'SWITCH_MODAL'
+        type: 'THANKS_MODAL_ACTIVE'
     })
     refreshModalInputState()
 }
@@ -116,7 +116,7 @@ const handleBlackPledge = value => {
         type: 'UPDATE_BLACK_LEFT'
     })
     dispatch({
-        type: 'SWITCH_MODAL'
+        type: 'THANKS_MODAL_ACTIVE'
     })
     refreshModalInputState()
 }
@@ -138,7 +138,7 @@ const handleMahoganyPledge = value => {
         type: 'UPDATE_MAHOGANY_LEFT'
     })
     dispatch({
-        type: 'SWITCH_MODAL'
+        type: 'THANKS_MODAL_ACTIVE'
     })
     refreshModalInputState()
 
@@ -235,7 +235,7 @@ const handleMahoganyPledge = value => {
                     </PledgeInputTextWrapper>
 
                     <PledgeModalButton onClick={() => {
-                        console.log(modalInputState.bambooEdition, 'hmmm', error)
+                        
                         handleBambooPledge(modalInputState.bambooEdition)
                     }}>Continue</PledgeModalButton>
                 </ModalSectionInput>
