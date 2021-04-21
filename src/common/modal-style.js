@@ -80,14 +80,12 @@ max-height: 160px;
 transition: all ease 0.5;
 @media (max-width: 512px) {
     max-height: 300px;
-    border: 2px solid yellow;
   }
   @media only screen 
   and (device-width : 375px) 
   and (device-height : 812px) 
   and (-webkit-device-pixel-ratio : 3) { 
-      max-height: 550px;
-      border: 2px solid purple;
+      max-height: 300px;
   }
 ${({noReward,bamboo,black,mahogany }) => (noReward || black || bamboo || mahogany )&& `
     border-color: hsl(176, 50%, 47%);
