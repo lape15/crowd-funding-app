@@ -79,15 +79,29 @@ height: 160px;
 max-height: 160px;
 transition: all ease 0.5;
 @media (max-width: 512px) {
-    max-height: 450px;
+    max-height: 300px;
+    border: 2px solid yellow;
+  }
+  @media only screen 
+  and (device-width : 375px) 
+  and (device-height : 812px) 
+  and (-webkit-device-pixel-ratio : 3) { 
+      max-height: 380px;
+      border: 2px solid purple;
   }
 ${({noReward,bamboo,black,mahogany }) => (noReward || black || bamboo || mahogany )&& `
     border-color: hsl(176, 50%, 47%);
     max-height: 400px;
     transition: all ease 0.5;
     @media (max-width: 512px) {
-        max-height: 600px;
+        max-height: 500px;
       }
+    @media only screen 
+    and (device-width : 375px) 
+    and (device-height : 812px) 
+    and (-webkit-device-pixel-ratio : 3) { 
+        max-height: 550px;
+    }
 `}
 ${({mahoganyLeft}) => mahoganyLeft === 0 && `
     pointer-events: none;
