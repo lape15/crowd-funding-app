@@ -75,7 +75,7 @@ padding: 2rem 1.5rem;
 border: 1px solid hsl(0, 0%, 90%);
 border-radius: 0.5rem;
 margin-top: 2rem;
-height: 160px;
+
 max-height: 160px;
 transition: all ease 0.5;
 @media (max-width: 512px) {
