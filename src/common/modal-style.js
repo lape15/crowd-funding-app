@@ -86,7 +86,7 @@ transition: all ease 0.5;
   and (device-width : 375px) 
   and (device-height : 812px) 
   and (-webkit-device-pixel-ratio : 3) { 
-      max-height: 380px;
+      max-height: 550px;
       border: 2px solid purple;
   }
 ${({noReward,bamboo,black,mahogany }) => (noReward || black || bamboo || mahogany )&& `
