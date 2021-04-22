@@ -165,7 +165,7 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
               alt="close"
               onClick={() =>
                 dispatch({
-                  type: 'SWITCH_MODAL',
+                  type: 'CLOSE_MODAL',
                 })
               }
             />
@@ -181,11 +181,12 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
             <PledgeModalTitleSection>
               <PledgeTitlte
                 modal
-                onClick={() =>
+                onClick={() => {
+                  setError('');
                   dispatch({
                     type: 'NO_REWARD_ACTIVE',
-                  })
-                }
+                  });
+                }}
                 noReward={noRewardActive}
               >
                 <PledgeInput type="radio" />
@@ -239,11 +240,12 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
             <PledgeModalTitleSection>
               <PledgeTitlte
                 modal
-                onClick={() =>
+                onClick={() => {
+                  setError('');
                   dispatch({
                     type: 'BAMBOO_ACTIVE',
-                  })
-                }
+                  });
+                }}
                 bamboo={bambooEditionActive}
               >
                 <PledgeInput type="radio" />
@@ -304,11 +306,12 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
             <PledgeModalTitleSection>
               <PledgeTitlte
                 modal
-                onClick={() =>
+                onClick={() => {
+                  setError('');
                   dispatch({
                     type: 'BLACK_ACTIVE',
-                  })
-                }
+                  });
+                }}
                 black={blackEditionActive}
               >
                 <PledgeInput type="radio" />
@@ -374,11 +377,12 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
             <PledgeModalTitleSection>
               <PledgeTitlte
                 modal
-                onClick={() =>
+                onClick={() => {
+                  setError('');
                   dispatch({
                     type: 'MAHOGANY_ACTIVE',
-                  })
-                }
+                  });
+                }}
                 mahogany={mahoganyEditionActive}
               >
                 <PledgeInput type="radio" />

@@ -152,10 +152,13 @@ const Board = ({ PledgeRefOne, PledgeRefTwo, PledgeRefThree, progressRef }) => {
                   dispatch({
                     type: 'SWITCH_MODAL',
                   });
-                  PledgeRefOne.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start',
-                  });
+                  if (PledgeRefOne.current) {
+                    PledgeRefOne.current.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                      inline: 'nearest',
+                    });
+                  }
                   dispatch({
                     type: 'BAMBOO_ACTIVE',
                   });
@@ -185,11 +188,13 @@ const Board = ({ PledgeRefOne, PledgeRefTwo, PledgeRefThree, progressRef }) => {
                   dispatch({
                     type: 'SWITCH_MODAL',
                   });
-                  PledgeRefTwo.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start',
-                    inline: 'nearest',
-                  });
+                  if (PledgeRefTwo.current) {
+                    PledgeRefTwo.current.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                      inline: 'nearest',
+                    });
+                  }
 
                   dispatch({
                     type: 'BLACK_ACTIVE',
@@ -220,10 +225,12 @@ const Board = ({ PledgeRefOne, PledgeRefTwo, PledgeRefThree, progressRef }) => {
                   dispatch({
                     type: 'SWITCH_MODAL',
                   });
-                  PledgeRefThree.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start',
-                  });
+                  if (PledgeRefThree.current) {
+                    PledgeRefThree.current.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start',
+                    });
+                  }
                   dispatch({
                     type: 'MAHOGANY_ACTIVE',
                   });

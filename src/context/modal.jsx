@@ -30,6 +30,10 @@ function modalReducer(state, action) {
       return {
         ...state,
         showModal: false,
+        noRewardActive: false,
+        bambooEditionActive: false,
+        blackEditionActive: false,
+        mahoganyEditonActive: false,
       };
 
     case 'UPDATE_BACKED_AMOUNT':
