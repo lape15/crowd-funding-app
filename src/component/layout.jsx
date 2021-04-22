@@ -1,52 +1,43 @@
-import {useRef, useEffect, useContext} from 'react';
-import Board from "./board";
-import Modal from "./modal";
-import TopSection from "./top-section";
-import {PledgeContext} from '../context/modal'
+import { useRef, useEffect, useContext } from 'react';
+import Board from './board';
+import Modal from './modal';
+import TopSection from './top-section';
+import { PledgeContext } from '../context/modal';
 import ThanksModal from './thanks-modal';
 
-
 const HomePage = () => {
-  const parentNode = useRef();
+  const parentNodes = useRef();
+  const progressRef = useRef(null);
 
-  const {state:{showModal}, dispatch} = useContext(PledgeContext); 
+  const {
+    state: { showModal },
+    dispatch,
+  } = useContext(PledgeContext);
   const PledgeRefOne = useRef(null);
   const PledgeRefTwo = useRef(null);
   const PledgeRefThree = useRef(null);
+  return (
+    <div>
+      <TopSection />
+      {/* Selected pledge start */}
+      <Board
+        PledgeRefOne={PledgeRefOne}
+        PledgeRefTwo={PledgeRefTwo}
+        PledgeRefThree={PledgeRefThree}
+        progressRef={progressRef}
+      />
 
-   const handleClick = e => {
-    if(parentNode.current.contains(e.target)) {
-      return;
-    }
-    if(!parentNode.current.contains(e.target) && !showModal) {
-      dispatch({
-          type: 'CLOSE_MODAL',
-      })
-      dispatch({
-        type: 'RESET_PLEDGE',
-    })
-    }
+      <div ref={parentNodes}>
+        <Modal
+          PledgeRefOne={PledgeRefOne}
+          PledgeRefTwo={PledgeRefTwo}
+          PledgeRefThree={PledgeRefThree}
+        />
+      </div>
 
-  }
-  useEffect(() => {
-      // add when mounted
-      document.addEventListener("mousedown", handleClick);
-      // return function to be called when unmounted
-      return () => {
-        document.removeEventListener("mousedown", handleClick);
-      };
-    }, []);
-
-  return <div >
-    <TopSection />
-    {/* Selected pledge start */}
-    <Board PledgeRefOne={PledgeRefOne} PledgeRefTwo={PledgeRefTwo} PledgeRefThree={PledgeRefThree}/>
-    <div ref={parentNode}>
-    < Modal PledgeRefOne={PledgeRefOne} PledgeRefTwo={PledgeRefTwo} PledgeRefThree={PledgeRefThree}/>
+      <ThanksModal progressRef={progressRef} />
     </div>
-    <ThanksModal/>
-  </div>
+  );
 };
 
 export default HomePage;
-

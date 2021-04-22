@@ -1,7 +1,7 @@
-import {useState} from 'react'
-import styled from "styled-components";
-import logo from '../assets/logo.svg'
-import background from '../assets/image-hero-desktop.jpg'
+import { useState } from 'react';
+import styled from 'styled-components';
+import logo from '../assets/logo.svg';
+import background from '../assets/image-hero-desktop.jpg';
 import backgroundMobile from '../assets/image-hero-mobile.jpg';
 import menu from '../assets/icon-hamburger.svg';
 import closeMenu from '../assets/icon-close-menu.svg';
@@ -26,8 +26,10 @@ const TopNav = styled.section`
 `;
 
 const Nav = styled.nav`
- flex:60%;
- ${({menu}) => menu && `
+  flex: 60%;
+  ${({ menu }) =>
+    menu &&
+    `
  display: none;
  @media(max-width: 512px){
    flex: 40%;
@@ -35,7 +37,9 @@ const Nav = styled.nav`
    text-align: right;
  }
 `}
- ${({right, showMobileMenu}) => right &&`
+  ${({ right, showMobileMenu }) =>
+    right &&
+    `
     flex: 40%;
     display: flex;
     justify-content: space-between;
@@ -54,22 +58,27 @@ const Nav = styled.nav`
     opacity:0;
     transition: all 0.5s ease;
  }
- ${showMobileMenu && `
+ ${
+   showMobileMenu &&
+   `
  @media(max-width: 512px){
     opacity: 1;
     max-height: 250px;
     transition: all 0.5s ease;
     }
-  `}
+  `
+ }
 `}
 `;
 
 const NavItem = styled.div`
-color: #fff;
-font-family:'Commissioner', sans-serif;
-font-weight: 700;
-font-size: 1rem;
-${({right}) => right && `
+  color: #fff;
+  font-family: 'Commissioner', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  ${({ right }) =>
+    right &&
+    `
 @media(max-width: 512px){
   color: #000;
   padding: 20px 0;
@@ -85,35 +94,36 @@ ${({right}) => right && `
 `;
 
 const Logo = styled.img`
-    width: 100px;
-    @media(max-width: 512px){
-      width: 135px;
-    }
-`
+  width: 100px;
+  @media (max-width: 512px) {
+    width: 135px;
+  }
+`;
 const TopSection = () => {
-  const [showMobileMenu,setShowMobileMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-  const handleMobileMenu = () => setShowMobileMenu(!showMobileMenu)
-return (
-<TopNav>
-  <Nav>
-  <NavItem>
-    <Logo src={logo} alt="logo"/>
-  </NavItem>
-  </Nav>
-  <Nav menu onClick={handleMobileMenu}>
-    {
-      !showMobileMenu ? <img  src={menu} alt="menu"/> : <img  src={closeMenu} alt="close_menu"/>
-    }
-    
-  </Nav>
-    <Nav right showMobileMenu={showMobileMenu}>
-      <NavItem right> About</NavItem>
-      <NavItem right>Discover</NavItem>
-      <NavItem right> Get Started</NavItem>
-    </Nav>
-  </TopNav>
-)
-}
+  const handleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
+  return (
+    <TopNav>
+      <Nav>
+        <NavItem>
+          <Logo src={logo} alt="logo" />
+        </NavItem>
+      </Nav>
+      <Nav menu onClick={handleMobileMenu}>
+        {!showMobileMenu ? (
+          <img src={menu} alt="menu" />
+        ) : (
+          <img src={closeMenu} alt="close_menu" />
+        )}
+      </Nav>
+      <Nav right showMobileMenu={showMobileMenu}>
+        <NavItem right> About</NavItem>
+        <NavItem right>Discover</NavItem>
+        <NavItem right> Get Started</NavItem>
+      </Nav>
+    </TopNav>
+  );
+};
 
 export default TopSection;

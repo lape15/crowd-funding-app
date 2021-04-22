@@ -1,7 +1,7 @@
 .App {
-  min-height: 99vh;
-  font-family: "Commissioner", sans-serif;
+  min-height: 100vh;
+  font-family: 'Commissioner', sans-serif;
   position: relative;
-  background-color: rgba(207, 207, 207,0.1);
+  background-color: rgba(207, 207, 207, 0.1);
   overflow-x: hidden;
 }
