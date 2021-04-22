@@ -9,7 +9,7 @@ const ModalWrapper = styled.div`
   overflow-y: scroll;
   outline: none;
   border: none;
-  width: 700px;
+  width: 60%;
   margin: 10% auto;
   background-color: hsl(0, 0%, 100%);
   border: 1px solid hsl(0, 0%, 90%);
@@ -29,7 +29,14 @@ transform: scale(1);
 transform-origin: center;
 transition: all ease 0.5s;
   `}
-  @media(max-width: 512px) {
+  @media (max-width: 1200px) {
+    margin: 25% auto;
+    height: 50vh;
+  }
+  @media (max-width: 768px) {
+    height: 60vh;
+  }
+  @media (max-width: 512px) {
     width: 100%;
     left: 0;
   }
@@ -82,6 +89,9 @@ const PledgeBoardItem = styled.div`
 
   max-height: 160px;
   transition: all ease 0.5;
+  @media (max-width: 768px) {
+    max-height: 250px;
+  }
   @media (max-width: 512px) {
     max-height: 300px;
   }
@@ -98,7 +108,10 @@ const PledgeBoardItem = styled.div`
     border-color: hsl(176, 50%, 47%);
     max-height: 400px;
     transition: all ease 0.5;
-    @media (max-width: 512px) {
+      @media (max-width: 768px) {
+        max-height: 500px;
+      }
+   @media (max-width: 512px) {
         max-height: 500px;
       }
       @media (max-width: 360px) {

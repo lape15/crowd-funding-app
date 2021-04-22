@@ -18,7 +18,6 @@ const ModalCon = styled.div`
         transition: all ease 0.5s;
         transform: scale(0.95);
     `}
-  ${({ open }) => console.log(open, 'open')}
 `;
 
 const ModalWrapperMain = ({ children, open }) => {

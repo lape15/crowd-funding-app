@@ -157,7 +157,7 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
 
   return (
     <ModalWrapperMain open={showModal}>
-      <ModalWrapper>
+      <ModalWrapper showModal={showModal}>
         <ModalHeaderSection>
           <ModalCloseContainer>
             <ModalClose
