@@ -203,13 +203,14 @@ const PledgeModalTitleSection = styled.div`
 `;
 
 const ModalSectionInput = styled.div`
-  padding: 10px 0px 10px 35px;
+  padding: 15px 0px 15px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1.5rem;
   opacity: 0;
   transition: opacity ease 0.3;
+  border-top: 1px solid hsl(0, 0%, 90%);
   @media (max-width: 512px) {
     display: block;
   }
