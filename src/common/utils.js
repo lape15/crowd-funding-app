@@ -1,3 +1,5 @@
+const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
+
 function flagErrorBamboo(amount) {
   let errorAmount = false;
   if (Number(amount) < 25) errorAmount = true;
@@ -24,7 +26,7 @@ const filterOutInvalid = (value) => {
 
 const filterString = (str) => {
   let errorString = false;
-  if (str.match(/[a-z]/i)) errorString = true;
+  if (str.match(/[a-z]/i) || str.match(specialChar)) errorString = true;
   return errorString;
 };
 export {
