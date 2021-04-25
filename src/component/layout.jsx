@@ -6,7 +6,6 @@ import { PledgeContext } from '../context/modal';
 import ThanksModal from './thanks-modal';
 
 const HomePage = () => {
-  const parentNodes = useRef();
   const progressRef = useRef(null);
 
   const {
@@ -16,6 +15,7 @@ const HomePage = () => {
   const PledgeRefOne = useRef(null);
   const PledgeRefTwo = useRef(null);
   const PledgeRefThree = useRef(null);
+
   return (
     <div>
       <TopSection />
@@ -27,7 +27,7 @@ const HomePage = () => {
         progressRef={progressRef}
       />
 
-      <div ref={parentNodes}>
+      <div>
         <Modal
           PledgeRefOne={PledgeRefOne}
           PledgeRefTwo={PledgeRefTwo}

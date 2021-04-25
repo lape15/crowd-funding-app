@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext } from 'react';
 import bookMark from '../assets/icon-bookmark.svg';
 import masterLogo from '../assets/logo-mastercraft.svg';
 import bookMarked from '../assets/icon-bookmarked.svg';
@@ -110,7 +110,7 @@ const Board = ({ PledgeRefOne, PledgeRefTwo, PledgeRefThree, progressRef }) => {
             <BackedDetails> days left </BackedDetails>
           </BoardItem>
         </BoardItemContainer>
-        <ProgressContainer>
+        <ProgressContainer progressTransition={progressTransition}>
           <ProgressBar
             progressTransition={progressTransition}
             progressLength={progressLength}

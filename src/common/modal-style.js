@@ -203,7 +203,7 @@ const PledgeModalTitleSection = styled.div`
 `;
 
 const ModalSectionInput = styled.div`
-  padding: 15px 0px 15px 40px;
+  padding: 25px 0px 25px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;

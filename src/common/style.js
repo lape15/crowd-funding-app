@@ -230,6 +230,12 @@ const ProgressContainer = styled.div`
   height: 1rem;
   background-color: hsl(0, 0%, 90%);
   border-radius: 0.5rem;
+  ${({ progressTransition }) =>
+    progressTransition &&
+    `
+    transition: width 0.95296s ease-out 0s;
+ 
+  `}
 `;
 
 const Title = styled.h3`

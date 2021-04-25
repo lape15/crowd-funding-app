@@ -21,41 +21,14 @@ const ModalCon = styled.div`
 `;
 
 const ModalWrapperMain = ({ children, open }) => {
-  const parentNode = useRef();
   const {
     state: { showModal },
     dispatch,
   } = useContext(PledgeContext);
 
-  const handleClick = (e) => {
-    if (parentNode.current.contains(e.target)) {
-      console.log('aaa', parentNode, parentNode.current);
-      return;
-    }
-    if (!parentNode.current.contains(e.target) && showModal) {
-      dispatch({
-        type: 'CLOSE_MODAL',
-      });
-      dispatch({
-        type: 'RESET_PLEDGE',
-      });
-      console.log('weee', parentNode);
-    }
-  };
-  useEffect(() => {
-    // add when mounted
-    document.addEventListener('mousedown', handleClick);
-    // return function to be called when unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, []);
-
   return (
     <MainModal>
-      <ModalCon open={open} ref={parentNode}>
-        {open && children}
-      </ModalCon>
+      <ModalCon open={open}>{open && children}</ModalCon>
     </MainModal>
   );
 };

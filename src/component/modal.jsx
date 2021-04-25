@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import { PledgeContext } from '../context/modal';
 import ModalWrapperMain from './modal-wrapper';
 import {
@@ -23,6 +23,7 @@ import {
   flagErrorBlack,
   flagErrorMahogany,
   filterOutInvalid,
+  filterString,
 } from '../common/utils';
 import close from '../assets/icon-close-modal.svg';
 import {
@@ -39,6 +40,7 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
     blackEdition: '',
     mahoganyEdition: '',
   });
+  const parentNode = useRef();
   const [error, setError] = useState('');
 
   const {
@@ -54,6 +56,42 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
     },
     dispatch,
   } = useContext(PledgeContext);
+
+  // const handleClick = (e) => {
+  //   if (parentNode.current) {
+  //     if (parentNode.current.contains(e.target)) {
+  //       console.log('poop', e, parentNode.current);
+  //       return;
+  //     }
+  //     if (!parentNode.current.contains(e.target) && showModal) {
+  //       dispatch({
+  //         type: 'CLOSE_MODAL',
+  //       });
+  //       dispatch({
+  //         type: 'RESET_PLEDGE',
+  //       });
+  //       console.log('weee', parentNode, e);
+  //     }
+  //   }
+  // };
+  useEffect(() => {
+    // add when mounted
+    // document.addEventListener('mousedown', handleClick);
+    // // return function to be called when unmounted
+    // return () => {
+    //   document.removeEventListener('mousedown', handleClick);
+    // };
+    // console.log('oool');
+    const handleClick = (e) => {
+      if (e.target) {
+        // console.log(e);
+        return;
+      }
+    };
+    if (showModal) {
+      window.addEventListener('click', handleClick);
+    }
+  }, [showModal]);
 
   const handlePledgeChange = (e) => {
     setError('');
@@ -76,6 +114,9 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
     if (filterOutInvalid(value)) {
       setError('Make your pledge count!');
       return;
+    } else if (filterString(value)) {
+      setError('invalid amount');
+      return;
     } else {
       dispatch({
         type: 'UPDATE_BACKED_AMOUNT',
@@ -94,6 +135,9 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
       return;
     } else if (flagErrorBamboo(value)) {
       setError('Do not be a cheap skate, make it count!');
+      return;
+    } else if (filterString(value)) {
+      setError('invalid amount');
       return;
     } else {
       dispatch({
@@ -118,6 +162,9 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
     } else if (flagErrorBlack(value)) {
       setError('Do not be a cheap skate, make it count!');
       return;
+    } else if (filterString(value)) {
+      setError('invalid amount');
+      return;
     } else {
       dispatch({
         type: 'UPDATE_BACKED_AMOUNT',
@@ -140,6 +187,9 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
     } else if (flagErrorMahogany(value)) {
       setError('Do not be a cheap skate, make it count!');
       return;
+    } else if (filterString(value)) {
+      setError('invalid amount');
+      return;
     } else {
       dispatch({
         type: 'UPDATE_BACKED_AMOUNT',
@@ -157,7 +207,7 @@ const Modal = ({ PledgeRefOne, PledgeRefThree, PledgeRefTwo }) => {
 
   return (
     <ModalWrapperMain open={showModal}>
-      <ModalWrapper showModal={showModal}>
+      <ModalWrapper showModal={showModal} ref={parentNode}>
         <ModalHeaderSection>
           <ModalCloseContainer>
             <ModalClose
