@@ -17,7 +17,7 @@ const HomePage = () => {
   const PledgeRefThree = useRef(null);
 
   return (
-    <div>
+    <div data-cy="layout">
       <TopSection />
       {/* Selected pledge start */}
       <Board

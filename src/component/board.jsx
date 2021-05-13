@@ -72,10 +72,11 @@ const Board = ({ PledgeRefOne, PledgeRefTwo, PledgeRefThree, progressRef }) => {
                 type: 'SWITCH_MODAL',
               })
             }
+            data-cy="fist-btn"
           >
             Back this project
           </BoardButton>
-          <GreyButton onClick={handleBookmarked}>
+          <GreyButton onClick={handleBookmarked} data-cy="bookmark">
             {!bookmarked ? (
               <BookMarkImg src={bookMark} alt="bookmark" />
             ) : (
